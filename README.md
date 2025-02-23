@@ -1,5 +1,16 @@
 # orarm
 
+# install 
+
+```
+kubectl apply -f security/base/cert-manager/clusterissuer.yaml
+
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+helm install argocd argo/argo-cd -f app/base/argocd/values.yaml -n argocd --create-namespace
+
+```
+
 ## k3s
 `scp bootstrap_k3s.sh user@host:~/`
 

@@ -1,7 +1,9 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: argocd-ingress
+  name: argocd-server
+  # annotations:
+  #   cert-manager.io/cluster-issuer: letsencrypt
   namespace: argocd
 spec:
   entryPoints:
@@ -21,10 +23,15 @@ spec:
           port: 80
           scheme: h2c
   tls:
-    # certResolver: default
-    # secretName: argocd-tls
+    # - hosts:
+    #   - argocd.orarm.cagou.ovh
+    #   secretName: argocd-secret
+    certResolver: default
     # certResolver: letsencrypt
-    certResolver: myresolver
+    # certResolver: myresolver
+    # secretName: argocd-tls
+
+# https://doc.traefik.io/traefik/routing/providers/kubernetes-crd/
 
 ---
 
