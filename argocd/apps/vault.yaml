@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault
+  namespace: argocd
+spec:
+  project: security
+  source:
+    repoURL: git@github.com:ton-repo.git
+    targetRevision: main
+    path: apps/security/vault  # 🔥 Chemin vers les manifests de Vault
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: vault
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

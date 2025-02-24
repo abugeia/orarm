@@ -1,0 +1,22 @@
+# argocd ajouté une fois à la main puis gérée par ArgoCD avec ce manifeste
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:https://github.com/abugeia/orarm.git
+    targetRevision: main
+    path: argocd/helm
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
