@@ -7,7 +7,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@github.com:https://github.com/abugeia/orarm.git
+    repoURL: https://github.com/abugeia/orarm.git
     targetRevision: main
     path: argocd/apps
   destination:
