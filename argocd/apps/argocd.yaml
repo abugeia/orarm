@@ -12,7 +12,7 @@ spec:
     chart: argo/argo-cd
     helm:
       valueFiles:
-        - argocd/helm/values.yaml
+        - https://github.com/abugeia/orarm/argocd/helm/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
