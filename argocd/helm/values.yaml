@@ -12,8 +12,8 @@ server:
       kind: ClusterIssuer
       name: letsencrypt
     domain: argocd.orarm.cagou.ovh
-  certificateSecret:
-    enabled: true
+  # certificateSecret:
+  #   enabled: true
 configs:
   params:
     server.insecure: true
