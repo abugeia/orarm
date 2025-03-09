@@ -10,6 +10,10 @@ data:
         {
           "node": "DEFAULT_PATH_FOR_ALL_NODES",
           "paths": ["/mnt/sdb1/local-path"]
+        },
+        {
+          "node": "DEFAULT_PATH_FOR_NON_LISTED_NODES",
+          "paths": ["/mnt/sdb1/local-path"]
         }
       ]
     }
