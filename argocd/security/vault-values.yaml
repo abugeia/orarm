@@ -12,6 +12,8 @@ injector:
 server:
   ingress:
     enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
     ingressClassName: "traefik"
     hosts:
       - host: vault.orarm.cagou.ovh
@@ -20,21 +22,6 @@ server:
      - secretName: vault-tls
        hosts:
          - vault.orarm.cagou.ovh
-
-  # volumes is a list of volumes made available to all containers. These are rendered
-  # via toYaml rather than pre-processed like the extraVolumes value.
-  # The purpose is to make it easy to share volumes between containers.
-  volumes: null
-  #   - name: plugins
-  #     emptyDir: {}
-
-  # volumeMounts is a list of volumeMounts for the main server container. These are rendered
-  # via toYaml rather than pre-processed like the extraVolumes value.
-  # The purpose is to make it easy to share volumes between containers.
-  volumeMounts: null
-  #   - mountPath: /usr/local/libexec/vault
-  #     name: plugins
-  #     readOnly: true
 
   # This configures the Vault Statefulset to create a PVC for data
   # storage when using the file or raft backend storage engines.
@@ -47,13 +34,9 @@ server:
     mountPath: "/vault/data"
     # Name of the storage class to use.  If null it will use the
     # configured default Storage Class.
-    storageClass: null
+    storageClass: "local-path"
     # Access Mode of the storage device being used for the PVC
     accessMode: ReadWriteOnce
-    # Annotations to apply to the PVC
-    annotations: {}
-    # Labels to apply to the PVC
-    labels: {}
 
 
   # Run Vault in "standalone" mode. This is the default mode that will deploy if
@@ -103,33 +86,6 @@ server:
       #  prometheus_retention_time = "30s"
       #  disable_hostname = true
       #}
-
-  # Settings for the statefulSet used to run Vault.
-  statefulSet:
-    # Extra annotations for the statefulSet. This can either be YAML or a
-    # YAML-formatted multi-line templated string map of the annotations to apply
-    # to the statefulSet.
-    annotations: {}
-
-    # Set the pod and container security contexts.
-    # If not set, these will default to, and for *not* OpenShift:
-    # pod:
-    #   runAsNonRoot: true
-    #   runAsGroup: {{ .Values.server.gid | default 1000 }}
-    #   runAsUser: {{ .Values.server.uid | default 100 }}
-    #   fsGroup: {{ .Values.server.gid | default 1000 }}
-    # container:
-    #   allowPrivilegeEscalation: false
-    #
-    # If not set, these will default to, and for OpenShift:
-    # pod: {}
-    # container: {}
-    securityContext:
-      pod: {}
-      container: {}
-
-  # Should the server pods run on the host network
-  hostNetwork: false
 
 # Vault UI
 ui:

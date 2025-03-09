@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: restart-local-path
+  namespace: kube-system
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: kubectl
+        image: bitnami/kubectl
+        command:
+        - /bin/sh
+        - -c
+        - |
+          kubectl delete pod -n kube-system -l app=local-path-provisioner
