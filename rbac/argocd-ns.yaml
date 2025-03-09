@@ -1,0 +1,26 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  # Nom du ClusterRole
+  name: argocd-create-namespace
+rules:
+  - verbs:
+      - create
+    resources:
+      - namespaces
+    apiGroups:
+      - ""
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  # Nom du ClusterRoleBinding
+  name: argocd-create-namespace-binding
+subjects:
+  - kind: ServiceAccount
+    name: argocd-application-controller
+    namespace: argocd
+roleRef:
+  kind: ClusterRole
+  name: argocd-create-namespace
+  apiGroup: rbac.authorization.k8s.io
