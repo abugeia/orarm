@@ -14,21 +14,59 @@ kubectl apply -f argocd/apps/root-app.yaml -n argocd
 
 ```
 
-## Récupération du mot de passe admin pour argo cd
+### Récupération du mot de passe admin par defaut pour argo cd
+```
 kubectl -n argocd get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
-
-## k3s
-`scp bootstrap_k3s.sh user@host:~/`
-
-```
-ssh user@host
-chmod +x bootstrap_k3s.sh
-./bootstrap_k3s.sh
 ```
 
-### accès depuis un remote
+### Sealed secrets
+install du client kubeseal :
+```
+https://github.com/bitnami-labs/sealed-secrets?tab=readme-ov-file#kubeseal
+```
+sur windows le binaire est sur [gh](https://github.com/bitnami-labs/sealed-secrets/releases)
+
+Récupération de la public key :
+```
+kubeseal --fetch-cert --controller-name=sealed-secrets --controller-namespace=security > sealed-secrets.pem
+
+```
+Création d'un secret.yaml (clear) :
+```
+kubectl create secret generic testsecret \
+  --from-literal=username=admin \
+  --from-literal=password=SuperSecret123 \
+  -n default \
+  -o yaml --dry-run=client > secrets/clear/secret.yaml
+```
+Création d'un sealedsecret à partir de secret.yaml :
+```
+kubeseal --controller-name=sealed-secrets --controller-namespace=security --format=yaml < secrets/clear/secret.yaml > secrets/sealedsecret.yaml
+
+```
+
+## todo
+-gestion du secret repo gh initial qui est en b64 dans le cluster
+
+
+
+### remote conf
 
 ```
 scp user@host:~/.kube/config ~/.kube/config
-ssh -L 6443:localhost:6443 ubuntu@orarm.cagou.ovh -N
+
+```
+example de conf :
+```
+cat <<EOF >> ~/.ssh/config
+
+Host orarm
+    HostName orarm.cagou.ovh
+    User ubuntu
+    IdentityFile ~/.ssh/id_ed25519
+    LocalForward 6443 127.0.0.1:6443
+    Port 22
+EOF
+
+ssh oram
 ```
