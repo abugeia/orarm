@@ -41,7 +41,7 @@ kubectl create secret generic testsecret \
 ```
 Création d'un sealedsecret à partir de secret.yaml :
 ```
-kubeseal --controller-name=sealed-secrets --controller-namespace=security --format=yaml < secrets/clear/secret.yaml > secrets/sealedsecret.yaml
+kubeseal --controller-name=sealed-secrets --controller-namespace=security --format=yaml < secrets/clear/secret.yaml >> secrets/sealedsecret.yaml
 
 ```
 

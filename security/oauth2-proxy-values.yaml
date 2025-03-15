@@ -1,0 +1,127 @@
+
+# Oauth client configuration specifics
+config:
+  # Add config annotations
+  annotations: {}
+  # OAuth client ID
+  clientID: "Ov23li0COIwgTVYbHHgO"
+  # OAuth client secret
+  clientSecret: "oauth2-proxy-secret"
+  # Create a new secret with the following command
+  # openssl rand -base64 32 | head -c 32 | base64
+  # Use an existing secret for OAuth2 credentials (see secret.yaml for required fields)
+  # Example:
+  # existingSecret: secret
+  cookieSecret: "XXXXXXXXXXXXXXXX"
+  # The name of the cookie that oauth2-proxy will create
+  # If left empty, it will default to the release name
+  cookieName: ""
+  google: {}
+    # adminEmail: xxxx
+    # useApplicationDefaultCredentials: true
+    # targetPrincipal: xxxx
+    # serviceAccountJson: xxxx
+    # Alternatively, use an existing secret (see google-secret.yaml for required fields)
+    # Example:
+    # existingSecret: google-secret
+    # groups: []
+    # Example:
+    #  - group1@example.com
+    #  - group2@example.com
+  # Default configuration, to be overridden
+  configFile: |-
+    email_domains = [ "*" ]
+    upstreams = [ "file:///dev/null" ]
+  # Custom configuration file: oauth2_proxy.cfg
+  # configFile: |-
+  #   pass_basic_auth = false
+  #   pass_access_token = true
+  # Use an existing config map (see configmap.yaml for required fields)
+  # Example:
+  # existingConfig: config
+
+
+extraArgs: {}
+extraEnv: []
+
+envFrom: []
+# Load environment variables from a ConfigMap(s) and/or Secret(s)
+# that already exists (created and managed by you).
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+#
+# PS: Changes in these ConfigMaps or Secrets will not be automatically
+#     detected and you must manually restart the relevant Pods after changes.
+#
+#  - configMapRef:
+#      name: special-config
+#  - secretRef:
+#      name: special-config-secret
+
+# -- Custom labels to add into metadata
+customLabels: {}
+
+# To authorize individual email addresses
+# That is part of extraArgs but since this needs special treatment we need to do a separate section
+authenticatedEmailsFile:
+  enabled: false
+  # Defines how the email addresses file will be projected, via a configmap or secret
+  persistence: configmap
+  # template is the name of the configmap what contains the email user list but has been configured without this chart.
+  # It's a simpler way to maintain only one configmap (user list) instead changing it for each oauth2-proxy service.
+  # Be aware the value name in the extern config map in data needs to be named to "restricted_user_access" or to the
+  # provided value in restrictedUserAccessKey field.
+  template: ""
+  # The configmap/secret key under which the list of email access is stored
+  # Defaults to "restricted_user_access" if not filled-in, but can be overridden to allow flexibility
+  restrictedUserAccessKey: ""
+  # One email per line
+  # example:
+  # restricted_access: |-
+  #   name1@domain
+  #   name2@domain
+  # If you override the config with restricted_access it will configure a user list within this chart what takes care of the
+  # config map resource.
+  restricted_access: ""
+  annotations: {}
+  # helm.sh/resource-policy: keep
+
+service:
+  type: ClusterIP
+  # when service.type is ClusterIP ...
+  # clusterIP: 192.0.2.20
+  # when service.type is LoadBalancer ...
+  # loadBalancerIP: 198.51.100.40
+  # loadBalancerSourceRanges: 203.0.113.0/24
+  # when service.type is NodePort ...
+  # nodePort: 80
+  portNumber: 80
+  # Protocol set on the service
+  appProtocol: http
+  annotations: {}
+  # foo.io/bar: "true"
+  # configure externalTrafficPolicy
+  externalTrafficPolicy: ""
+  # configure internalTrafficPolicy
+  internalTrafficPolicy: ""
+  # configure service target port
+  targetPort: ""
+
+ingress:
+  enabled: true
+  className: traefik
+  path: /
+  # Only used if API capabilities (networking.k8s.io/v1) allow it
+  pathType: ImplementationSpecific
+  # Used to create an Ingress record.
+  hosts:
+    - code.orarm.cagou.ovh
+
+  labels: {}
+  annotations:
+  #   kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  tls:
+    Secrets must be manually created in the namespace.
+    - secretName: code-oauth2-proxy-tls
+      hosts:
+        - code.orarm.cagou.ovh
