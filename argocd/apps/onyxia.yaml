@@ -1,26 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vault
+  name: onyxia
   namespace: argocd
 spec:
   project: default
   sources:
-  - repoURL: https://helm.releases.hashicorp.com
-    targetRevision: 0.29.1
-    chart: vault
+  - repoURL: https://InseeFrLab.github.io/onyxia
+    targetRevision: 10.9.9
+    chart: onyxia
     helm:
       valueFiles:
-      - $values/security/vault-values.yaml
+      - $values/apps/datalab/onyxia/values.yaml
   - repoURL: 'https://github.com/abugeia/orarm.git'
     targetRevision: HEAD
     ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: security
+    namespace: datalab
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true

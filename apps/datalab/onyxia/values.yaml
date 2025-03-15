@@ -1,0 +1,9 @@
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  hosts:
+    - host: datalab.orarm.cagou.ovh
+  tls:
+     - secretName: onyxia-tls
+       hosts:
+         - datalab.orarm.cagou.ovh
