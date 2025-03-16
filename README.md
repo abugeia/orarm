@@ -47,6 +47,18 @@ kubeseal --controller-name=sealed-secrets --controller-namespace=security --form
 
 ## todo
 -gestion du secret repo gh initial qui est en b64 dans le cluster
+- reessayer vault ?
+- postgresql
+- clickhouse ? ou equivalent
+- oauth2-proxy + gh ou un autre avec IdP
+- tuning de code server
+- monitoring ressources
+- container registry
+- noeud amd64
+- noeud local + gpu
+- kubevirt + distri
+- knative
+
 
 
 
