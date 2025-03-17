@@ -3,7 +3,7 @@ ingress:
   annotations:
     kubernetes.io/tls-acme: true
     traefik.ingress.kubernetes.io/router.middlewares: security-oauth2-proxy@kubernetescrd
-    cert-manager.io/cluster-issuer: letsencrypt
+    # cert-manager.io/cluster-issuer: letsencrypt
   hosts:
    - host: code.orarm.cagou.ovh
      paths:
