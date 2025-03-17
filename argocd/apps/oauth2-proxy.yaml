@@ -19,7 +19,7 @@ spec:
     ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: oauth2-proxy
+    namespace: security
   syncPolicy:
     automated:
       prune: true
