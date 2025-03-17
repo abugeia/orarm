@@ -1,16 +1,17 @@
 ingress:
-  enabled: false
-  #annotations:
-  #  kubernetes.io/tls-acme: "true"
-  #hosts:
-  #  - host: code-server.example.loc
-  #    paths:
-  #      - /
-  ingressClassName: ""
-  #tls:
-  #  - secretName: code-server
-  #    hosts:
-  #      - code-server.example.loc
+  enabled: true
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: "security-oauth2-proxy@kubernetescrd"
+  hosts:
+   - host: code.orarm.cagou.ovh
+     paths:
+       - /
+  ingressClassName: "traefik"
+  tls:
+   - secretName: code-server-tls
+     hosts:
+       - code.orarm.cagou.ovh
 
 # Optional additional arguments
 extraArgs: []

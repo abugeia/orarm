@@ -98,11 +98,12 @@ ingress:
 
   labels: {}
   annotations:
-  #   kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.middlewares: oauth2-proxy@kubernetescrd
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: "letsencrypt"  
   tls:
-    Secrets must be manually created in the namespace.
-    - secretName: code-oauth2-proxy-tls
+    # Secrets must be manually created in the namespace.
+    - secretName: oauth2-proxy-tls
       hosts:
         - auth.orarm.cagou.ovh
