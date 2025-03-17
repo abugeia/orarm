@@ -17,11 +17,4 @@ server:
 configs:
   params:
     server.insecure: true
-  # chatgpt pour gestion des secrets
-  cm:
-    application.instanceLabelKey: argocd.argoproj.io/instance
-  secret:
-    extra:
-      vault:
-        enabled: true
-        address: "http://vault.vault.svc:8200"
+
