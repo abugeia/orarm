@@ -5,7 +5,7 @@ metadata:
   namespace: security
 spec:
   forwardAuth:
-    address: "https://auth.orarm.cagou.ovh/oauth2/auth"
+    address: "https://auth.orarm.cagou.ovh/"
     trustForwardHeader: true
     authResponseHeaders:
       - "X-Auth-Request-User"
