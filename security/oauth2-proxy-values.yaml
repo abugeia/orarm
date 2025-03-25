@@ -25,7 +25,7 @@ config:
   configFile: |-
     reverse_proxy = true
     email_domains = [ "*" ]
-    upstreams = [ "static://202" ]
+    upstreams = [ "file:///dev/null" ]
     provider = "github"
     scope = "user:email read:org"
     github_users = "antoinebugeia,abugeia"
@@ -87,7 +87,7 @@ authenticatedEmailsFile:
 
 
 ingress:
-  enabled: true
+  enabled: false
   className: traefik
   path: /
   # Only used if API capabilities (networking.k8s.io/v1) allow it
