@@ -82,3 +82,25 @@ EOF
 
 ssh oram
 ```
+
+## Vault
+```
+kubectl exec -it vault-0 -n security -- vault operator init
+```
+
+Save  
+Unseal Key 1: YG5s0x...U1G  
+Unseal Key 2: jq8LZy...Xrf  
+Unseal Key 3: 7vd9Wa...Kpd  
+...  
+Initial Root Token: hvs.SmJxuPZ...7w
+
+```
+kubectl exec -it vault-0 -n security -- vault operator unseal <UNSEAL_KEY_1>
+kubectl exec -it vault-0 -n security -- vault operator unseal <UNSEAL_KEY_2>
+kubectl exec -it vault-0 -n security -- vault operator unseal <UNSEAL_KEY_3>
+
+
+kubectl exec -it vault-0 -n security -- vault status
+```
+
