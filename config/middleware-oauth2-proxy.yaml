@@ -6,7 +6,7 @@ metadata:
 spec:
   forwardAuth:
     # address: "http://oauth2-proxy.security.svc.cluster.local:80/oauth2/"
-    address: "http://auth.orarm.cagou.ovh/oauth2/auth?rd=%X-Forwarded-Proto%3A%2F%2F%X-Forwarded-Host%2F"
+    address: "http://auth.orarm.cagou.ovh/oauth2?rd=%X-Forwarded-Proto%3A%2F%2F%X-Forwarded-Host%2F"
     trustForwardHeader: true
     authResponseHeaders:
       - "X-Auth-Request-User"
