@@ -103,7 +103,7 @@ ingress:
   labels: {}
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.middlewares: security-oauth2-proxy@kubernetescrd
+    # traefik.ingress.kubernetes.io/router.middlewares: security-oauth2-proxy@kubernetescrd
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: "letsencrypt"  
   tls:
