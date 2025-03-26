@@ -46,6 +46,7 @@ extraArgs:
   skip-provider-button: true
   http-address: 0.0.0.0:4180
   skip_auth_strip_headers: true
+  pass_host_header: true
   
 extraEnv: []
 
