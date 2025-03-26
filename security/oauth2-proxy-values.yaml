@@ -31,7 +31,7 @@ config:
     github_users = "antoinebugeia,abugeia"
     cookie_domains = ".orarm.cagou.ovh"
     redirect_url = "https://auth.orarm.cagou.ovh/oauth2/callback"
-    whitelist_domains = "*.cagou.ovh"
+    whitelist_domains = "*.orarm.cagou.ovh"
   # Custom configuration file: oauth2_proxy.cfg
   # configFile: |-
   #   pass_basic_auth = false
@@ -41,9 +41,11 @@ config:
   # existingConfig: config
 
 
-extraArgs: {
+extraArgs: 
   real-client-ip-header: X-Forwarded-For
-  }
+  skip-provider-button: true
+  http-address: 0.0.0.0:4180
+  
 extraEnv: []
 
 envFrom: []
