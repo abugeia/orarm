@@ -25,7 +25,7 @@ config:
   configFile: |-
     reverse_proxy = true
     email_domains = [ "*" ]
-    upstreams = [ "static://200" ]
+    upstreams = "static://200"
     provider = "github"
     scope = "user:email read:org"
     github_users = "antoinebugeia,abugeia"
