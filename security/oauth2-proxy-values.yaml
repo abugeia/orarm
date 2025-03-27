@@ -94,7 +94,7 @@ authenticatedEmailsFile:
 
 
 ingress:
-  enabled: false
+  enabled: true
   className: traefik
   path: /oauth2
   # Only used if API capabilities (networking.k8s.io/v1) allow it
