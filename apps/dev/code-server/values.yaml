@@ -14,6 +14,8 @@ ingress:
      hosts:
        - code.orarm.cagou.ovh
 
+existingSecret: ""
+
 # Optional additional arguments
 extraArgs: []
   # These are the arguments normally passed to code-server; run
