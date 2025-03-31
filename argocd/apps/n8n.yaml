@@ -1,0 +1,27 @@
+# argocd ajouté une fois à la main puis gérée par ArgoCD avec ce manifeste
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: n8n
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+  - repoURL: oci://8gears.container-registry.com/library/
+    targetRevision: 1.0.5
+    chart: n8n
+    helm:
+      valueFiles:
+      - $values/apps/tools/n8n/values.yaml
+  - repoURL: 'https://github.com/abugeia/orarm.git'
+    targetRevision: HEAD
+    ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: n8n
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
