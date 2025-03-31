@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   sources:
-  - repoURL: 8gears.container-registry.com/library/n8n
+  - repoURL: 8gears.container-registry.com/library
     targetRevision: 1.0.5
     chart: n8n
     helm:
