@@ -51,14 +51,16 @@ kubeseal --controller-name=sealed-secrets --controller-namespace=security --form
 - postgresql
 - clickhouse ? ou equivalent
 - oauth2-proxy + gh ou un autre avec IdP
-- tuning de code server
 - monitoring ressources
 - container registry
+- builder
 - noeud amd64
 - noeud local + gpu
-- kubevirt + distri
+- kubevirt + distri => essyé pmais pas d'interet pour le moment
 - knative
-
+- code : img pero avec kubectl + python, activer DinD, faire un sercet kubeconfig et le monter dans l'img
+- Secret avec clé api pour llm à monter dans n8n
+- doc suppr d'une app
 
 
 
