@@ -43,7 +43,7 @@ ingress:
   className: "traefik"
   hosts:
     - host: n8n.orarm.cagou.ovh
-      paths: []
+      paths: ['/']
   tls:
     - hosts:
         - n8n.orarm.cagou.ovh
