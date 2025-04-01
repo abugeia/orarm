@@ -65,6 +65,8 @@ main:
       5678
     N8N_PROTOCOL:
       "https"
+    VUE_APP_URL_BASE_API:
+      "https://n8n.orarm.cagou.ovh/"
       
 
   # Dictionary for secrets, unlike config:, the values here will end up in the secret file.
