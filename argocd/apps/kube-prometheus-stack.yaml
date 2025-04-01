@@ -1,25 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: n8n
+  name: kube-prometheus-stack
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   sources:
-  - repoURL: 8gears.container-registry.com/library
-    targetRevision: 1.0.5
-    chart: n8n
+  - repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 70.3.0
+    chart: kube-prometheus-stack
     helm:
       valueFiles:
-      - $values/apps/tools/n8n/values.yaml
+      - $values/observability/kube-prometheus-stack/values.yaml
   - repoURL: 'https://github.com/abugeia/orarm.git'
     targetRevision: HEAD
     ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: tools
+    namespace: observability
   syncPolicy:
     automated:
       prune: true

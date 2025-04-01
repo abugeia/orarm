@@ -16,9 +16,14 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: n8n
+  name: tools
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: storage
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: observability
