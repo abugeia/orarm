@@ -59,12 +59,12 @@ main:
   #      type: postgresdb
   #      postgresdb:
   #        host: 192.168.0.52
-    - name: N8N_HOST
-      value: n8n.orarm.cagou.ovh
-    - name: N8N_PORT
-      value: 5678
-    - name: N8N_PROTOCOL
-      value: https
+    N8N_HOST:
+      "n8n.orarm.cagou.ovh"
+    N8N_PORT:
+      5678
+    N8N_PROTOCOL:
+      "https"
       
 
   # Dictionary for secrets, unlike config:, the values here will end up in the secret file.
