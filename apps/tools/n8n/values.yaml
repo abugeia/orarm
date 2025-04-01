@@ -53,12 +53,19 @@ ingress:
 # The config: {} dictionary is converted to environmental variables in the ConfigMap.
 main:
   # See https://docs.n8n.io/hosting/configuration/environment-variables/ for all values.
-  config: {}
+  config: 
   #    n8n:
   #    db:
   #      type: postgresdb
   #      postgresdb:
   #        host: 192.168.0.52
+    - name: N8N_HOST
+      value: n8n.orarm.cagou.ovh
+    - name: N8N_PORT
+      value: 5678
+    - name: N8N_PROTOCOL
+      value: https
+      
 
   # Dictionary for secrets, unlike config:, the values here will end up in the secret file.
   # The YAML entry db.postgresdb.password: my_secret is transformed DB_POSTGRESDB_password=bXlfc2VjcmV0
