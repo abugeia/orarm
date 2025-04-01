@@ -61,10 +61,10 @@ main:
   #        host: 192.168.0.52
     N8N_HOST:
       "n8n.orarm.cagou.ovh"
-    N8N_PORT:
-      443
-    N8N_PROTOCOL:
-      "https"
+    # N8N_PORT:
+    #   443
+    # N8N_PROTOCOL:
+    #   "https"
     VUE_APP_URL_BASE_API:
       "https://n8n.orarm.cagou.ovh/"
       
