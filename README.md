@@ -46,23 +46,24 @@ kubeseal --controller-name=sealed-secrets --controller-namespace=security --form
 ```
 
 ## todo
--gestion du secret repo gh initial qui est en b64 dans le cluster
-- reessayer vault ?
-- postgresql
+- passer le repo public
 - clickhouse ? ou equivalent
 - oauth2-proxy + gh ou un autre avec IdP
 - monitoring ressources
-- container registry
+- container registry => harbor nécessite amd64, ne fonctionne par avec arm
 - builder
 - noeud amd64
 - noeud local + gpu
-- kubevirt + distri => essyé pmais pas d'interet pour le moment
 - knative
-- code : img pero avec kubectl + python, activer DinD, faire un sercet kubeconfig et le monter dans l'img
-- Secret avec clé api pour llm à monter dans n8n
+- code : img perso avec kubectl + python, activer DinD, faire un sercet kubeconfig et le monter dans l'img
 - doc suppr d'une app
 
-
+## notdo
+- postgresql ? a priori il vaut mieux partir vers une instance par app lorsque nécessaire
+- vault ? très (trop?) chronophage pour le déploiement
+- gestion du secret repo gh initial qui est en b64 dans le cluster => public
+- kubevirt + distri => essyé pmais pas d'interet pour le moment
+- Secret avec clé api pour llm à monter dans n8n => géré par les credentials
 
 ### remote conf
 
