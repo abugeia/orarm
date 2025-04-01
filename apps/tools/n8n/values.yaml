@@ -62,7 +62,7 @@ main:
     N8N_HOST:
       "n8n.orarm.cagou.ovh"
     N8N_PORT:
-      5678
+      443
     N8N_PROTOCOL:
       "https"
     VUE_APP_URL_BASE_API:
