@@ -9,7 +9,7 @@ spec:
   project: default
   sources:
   - repoURL: https://oauth2-proxy.github.io/manifests
-    targetRevision: 7.12.6
+    targetRevision: 7.12.8
     chart: oauth2-proxy
     helm:
       valueFiles:
