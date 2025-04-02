@@ -9,7 +9,7 @@ spec:
   project: default
   sources:
   - repoURL: https://InseeFrLab.github.io/onyxia
-    targetRevision: 10.9.9
+    targetRevision: 10.11.0
     chart: onyxia
     helm:
       valueFiles:
