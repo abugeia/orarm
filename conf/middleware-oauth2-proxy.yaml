@@ -13,19 +13,3 @@ spec:
       - "X-Auth-Request-Email"
 # https://github.com/oauth2-proxy/oauth2-proxy/issues/1297#issuecomment-2004788570
 ---
-# apiVersion: traefik.io/v1alpha1
-# kind: IngressRoute
-# metadata:
-#   name: oauth2-proxy
-#   namespace: security
-# spec:
-#   entryPoints:
-#     - websecure
-#   routes:
-#     - match: "HostRegexp(`.+\\.oram\\.cagou\\.ovh`) && PathPrefix(`/oauth2`)"
-#       kind: Rule
-#       priority: 500
-#       services:
-#         - name: oauth2-proxy
-#           port: 80  # Assure-toi que c'est le bon port de ton service OAuth2 Proxy
-#   tls: {}

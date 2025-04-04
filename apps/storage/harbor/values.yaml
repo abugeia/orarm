@@ -528,7 +528,8 @@ portal:
   #    memory: 256Mi
   #    cpu: 100m
   extraEnvVars: []
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/arch: amd64
   tolerations: []
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
@@ -572,7 +573,8 @@ core:
   #    memory: 256Mi
   #    cpu: 100m
   extraEnvVars: []
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/arch: amd64
   tolerations: []
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
@@ -655,7 +657,8 @@ jobservice:
   #     memory: 256Mi
   #     cpu: 100m
   extraEnvVars: []
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/arch: amd64
   tolerations: []
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
@@ -727,7 +730,8 @@ registry:
   automountServiceAccountToken: false
   replicas: 1
   revisionHistoryLimit: 10
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/arch: amd64
   tolerations: []
   affinity: {}
   # Spread Pods across failure-domains like regions, availability zones or nodes
