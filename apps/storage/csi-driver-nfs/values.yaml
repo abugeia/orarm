@@ -128,19 +128,19 @@ node:
   resources:
     livenessProbe:
       limits:
-        memory: 100Mi
+        memory: 80Mi # 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nodeDriverRegistrar:
       limits:
-        memory: 100Mi
+        memory: 80Mi # 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nfs:
       limits:
-        memory: 300Mi
+        memory: 150Mi # 300Mi a kustomize sur controlplane ?
       requests:
         cpu: 10m
         memory: 20Mi

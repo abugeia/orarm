@@ -568,7 +568,9 @@ core:
   startupProbe:
     enabled: true
     initialDelaySeconds: 10
-  # resources:
+  resources:
+    limits:
+        memory: 100Mi
   #  requests:
   #    memory: 256Mi
   #    cpu: 100m
@@ -652,7 +654,9 @@ jobservice:
   automountServiceAccountToken: false
   replicas: 1
   revisionHistoryLimit: 10
-  # resources:
+  resources:
+    limits:
+        memory: 100Mi
   #   requests:
   #     memory: 256Mi
   #     cpu: 100m
@@ -710,7 +714,9 @@ registry:
     image:
       repository: goharbor/registry-photon
       tag: v2.12.2
-    # resources:
+    resources:
+      limits:
+        memory: 100Mi
     #  requests:
     #    memory: 256Mi
     #    cpu: 100m
@@ -810,10 +816,10 @@ trivy:
   resources:
     requests:
       cpu: 200m
-      memory: 512Mi
+      memory: 128Mi
     limits:
       cpu: 1
-      memory: 1Gi
+      memory: 400Gi
   extraEnvVars: []
   nodeSelector:
     kubernetes.io/arch: amd64
@@ -899,7 +905,9 @@ database:
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    # resources:
+    resources:
+      limits:
+        memory: 100Mi
     #  requests:
     #    memory: 256Mi
     #    cpu: 100m
@@ -931,7 +939,9 @@ database:
     shmSizeLimit: 512Mi
     initContainer:
       migrator: {}
-      # resources:
+      resources:
+        limits:
+          memory: 100Mi
       #  requests:
       #    memory: 128Mi
       #    cpu: 100m
@@ -980,7 +990,9 @@ redis:
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    # resources:
+    resources:
+      limits:
+        memory: 100Mi
     #  requests:
     #    memory: 256Mi
     #    cpu: 100m
@@ -1044,7 +1056,9 @@ exporter:
   automountServiceAccountToken: false
   replicas: 1
   revisionHistoryLimit: 10
-  # resources:
+  resources:
+    limits:
+        memory: 100Mi
   #  requests:
   #    memory: 256Mi
   #    cpu: 100m
