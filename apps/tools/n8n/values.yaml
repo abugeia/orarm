@@ -268,7 +268,8 @@ main:
     targetCPUUtilizationPercentage: 80
     # targetMemoryUtilizationPercentage: 80
 
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/arch: arm64
   tolerations: []
   affinity: {}
 
@@ -638,7 +639,8 @@ webhook:
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
     # targetMemoryUtilizationPercentage: 80
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/arch: arm64
   tolerations: []
   affinity: {}
 
