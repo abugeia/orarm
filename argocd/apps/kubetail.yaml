@@ -9,7 +9,7 @@ spec:
   project: default
   sources:
   - repoURL: https://kubetail-org.github.io/helm-charts/
-    targetRevision: kubetail-0.9.10
+    targetRevision: 0.9.10
     chart: kubetail
     helm:
       valueFiles:
