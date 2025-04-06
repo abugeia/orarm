@@ -25,7 +25,7 @@ expose:
       # The name of secret which contains keys named:
       # "tls.crt" - the certificate
       # "tls.key" - the private key
-      secretName: "harbor-tls"
+      secretName: harbor-tls
   ingress:
     hosts:
       core: harbor.orarm.cagou.ovh
@@ -42,12 +42,13 @@ expose:
     annotations:
       # note different ingress controllers may require a different ssl-redirect annotation
       # for Envoy, use ingress.kubernetes.io/force-ssl-redirect: "true" and remove the nginx lines below
-      ingress.kubernetes.io/ssl-redirect: "true"
-      ingress.kubernetes.io/proxy-body-size: "0"
+      # ingress.kubernetes.io/ssl-redirect: "true"
+      # ingress.kubernetes.io/proxy-body-size: "0"
       # nginx.ingress.kubernetes.io/ssl-redirect: "true"
       # nginx.ingress.kubernetes.io/proxy-body-size: "0"
       # traefik.ingress.kubernetes.io/router.middlewares: "security-oauth2-proxy@kubernetescrd"
       cert-manager.io/cluster-issuer: "letsencrypt"
+      kubernetes.io/tls-acme: "true"
     # ingress-specific labels
     labels: {}
   clusterIP:
@@ -570,7 +571,7 @@ core:
     initialDelaySeconds: 10
   resources:
     limits:
-        memory: 100Mi
+        memory: 200Mi
   #  requests:
   #    memory: 256Mi
   #    cpu: 100m
@@ -656,7 +657,7 @@ jobservice:
   revisionHistoryLimit: 10
   resources:
     limits:
-        memory: 100Mi
+        memory: 80Mi
   #   requests:
   #     memory: 256Mi
   #     cpu: 100m
@@ -716,7 +717,7 @@ registry:
       tag: v2.12.2
     resources:
       limits:
-        memory: 100Mi
+        memory: 150Mi
     #  requests:
     #    memory: 256Mi
     #    cpu: 100m
@@ -819,7 +820,7 @@ trivy:
       memory: 128Mi
     limits:
       cpu: 1
-      memory: 300Mi
+      memory: 250Mi
   extraEnvVars: []
   nodeSelector:
     kubernetes.io/arch: amd64
@@ -907,7 +908,7 @@ database:
     automountServiceAccountToken: false
     resources:
       limits:
-        memory: 100Mi
+        memory: 300Mi
     #  requests:
     #    memory: 256Mi
     #    cpu: 100m
@@ -941,7 +942,7 @@ database:
       migrator: {}
       resources:
         limits:
-          memory: 100Mi
+          memory: 128Mi
       #  requests:
       #    memory: 128Mi
       #    cpu: 100m
@@ -992,7 +993,7 @@ redis:
     automountServiceAccountToken: false
     resources:
       limits:
-        memory: 100Mi
+        memory: 80Mi
     #  requests:
     #    memory: 256Mi
     #    cpu: 100m
@@ -1058,7 +1059,7 @@ exporter:
   revisionHistoryLimit: 10
   resources:
     limits:
-        memory: 100Mi
+        memory: 128Mi
   #  requests:
   #    memory: 256Mi
   #    cpu: 100m
