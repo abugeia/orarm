@@ -819,7 +819,7 @@ trivy:
       memory: 128Mi
     limits:
       cpu: 1
-      memory: 400Gi
+      memory: 300Mi
   extraEnvVars: []
   nodeSelector:
     kubernetes.io/arch: amd64
