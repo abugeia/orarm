@@ -43,7 +43,7 @@ expose:
       # ingress.kubernetes.io/proxy-body-size: "0"
       # nginx.ingress.kubernetes.io/ssl-redirect: "true"
       # nginx.ingress.kubernetes.io/proxy-body-size: "0"
-      traefik.ingress.kubernetes.io/router.middlewares: "security-oauth2-proxy@kubernetescrd"
+      # traefik.ingress.kubernetes.io/router.middlewares: "security-oauth2-proxy@kubernetescrd"
       cert-manager.io/cluster-issuer: "letsencrypt"
       kubernetes.io/tls-acme: "true"
     # ingress-specific labels
