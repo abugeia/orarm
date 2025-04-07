@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: botten-anna-service
+  namespace: botten-anna
+  labels:
+    app: botten-anna
+spec:
+  type: ClusterIP
+  selector:
+    app: botten-anna 
+  ports:
+    - protocol: TCP
+      port: 80 
+      targetPort: 5000 

@@ -24,6 +24,8 @@ Création d'un sealedsecret à partir de secret.yaml :
 kubeseal --controller-name=sealed-secrets --controller-namespace=security --format=yaml < secrets/clear/secret.yaml >> secrets/sealedsecret.yaml
 
 ```
+flag pour le cert
+`--cert=secrets/clear/sealed-secret.pem`
 
 
 ## Vault

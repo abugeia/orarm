@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: botten-anna-ingress
+  namespace: botten-anna
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt
+    # kubernetes.io/tls-acme: "true" # Peut être nécessaire selon la version/config de cert-manager
+spec:
+  tls:
+    - hosts:
+        - ba.cagou.ovh 
+      secretName: botten-anna-tls 
+  rules:
+    - host: ba.cagou.ovh
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: botten-anna-service 
+                port:
+                  number: 80 

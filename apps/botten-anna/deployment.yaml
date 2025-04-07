@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: botten-anna-deployment
+  namespace: botten-anna
+  labels:
+    app: botten-anna 
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: botten-anna # Doit correspondre aux labels du template de pod
+  template:
+    metadata:
+      labels:
+        app: botten-anna 
+    spec:
+      imagePullSecrets: 
+        - name: harbor-creds
+      containers:
+        - name: botten-anna 
+          image: harbor.cagou.ovh/botten-anna/helloworld-python:main 
+          ports:
+            - containerPort: 5000 
+          readinessProbe:
+            httpGet:
+              path: / 
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 3600
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 3600
+          # --- Optionnel : Limites de ressources ---
+          # resources:
+          #   requests:
+          #     memory: "64Mi"
+          #     cpu: "100m" # 0.1 vCPU
+          #   limits:
+          #     memory: "128Mi"
+          #     cpu: "500m" # 0.5 vCPU
+      nodeSelector:
+        kubernetes.io/arch: arm64
