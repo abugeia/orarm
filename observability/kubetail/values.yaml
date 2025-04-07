@@ -9,10 +9,10 @@ kubetail:
       tls:
         - secretName: kubetail-tls
           hosts:
-            - kubetail.orarm.cagou.ovh
+            - kubetail.cagou.ovh
       # not in initial values.yaml      
       rules:
-        - host: kubetail.orarm.cagou.ovh
+        - host: kubetail.cagou.ovh
           http:
             paths:
             - path: /

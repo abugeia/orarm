@@ -11,6 +11,7 @@
 - code : img perso avec kubectl + python, activer DinD, faire un sercet kubeconfig et le monter dans l'img
 - doc rm d'une app
 - kestra
+- remplacer le domaine par une var dans les manifest
 
 ## notdo
 - postgresql ? a priori il vaut mieux partir vers une instance par app lorsque nécessaire

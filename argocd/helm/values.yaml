@@ -1,7 +1,7 @@
 server:
   ingress:
     enabled: true
-    hostname: argocd.orarm.cagou.ovh
+    hostname: argocd.cagou.ovh
     ingressClassName: traefik
     tls: true
     annotations:
@@ -11,7 +11,7 @@ server:
     issuer: 
       kind: ClusterIssuer
       name: letsencrypt
-    domain: argocd.orarm.cagou.ovh
+    domain: argocd.cagou.ovh
   certificateSecret:
     enabled: true
 configs:

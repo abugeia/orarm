@@ -15,7 +15,7 @@ alertmanager:
     ## Hosts must be provided if Ingress is enabled.
     ##
     hosts: 
-      - alertmanager.orarm.cagou.ovh
+      - alertmanager.cagou.ovh
 
     ## Paths to use for ingress rules - one path should match the alertmanagerSpec.routePrefix
     ##
@@ -32,7 +32,7 @@ alertmanager:
     tls:
     - secretName: alertmanager-tls
       hosts:
-      - alertmanager.orarm.cagou.ovh
+      - alertmanager.cagou.ovh
 
 
    
@@ -65,7 +65,7 @@ grafana:
     ## Must be provided if Ingress is enable.
     ##
     hosts:
-      - grafana.orarm.cagou.ovh
+      - grafana.cagou.ovh
 
 
     ## Path for grafana ingress
@@ -77,7 +77,7 @@ grafana:
     tls: 
     - secretName: grafana-tls
       hosts:
-      - grafana.orarm.cagou.ovh
+      - grafana.cagou.ovh
 
 ## Component scraping etcd
 ##
@@ -109,7 +109,7 @@ prometheus:
     ## Must be provided if Ingress is enabled.
     ##
     hosts:
-      - prometheus.orarm.cagou.ovh
+      - prometheus.cagou.ovh
 
 
     ## Paths to use for ingress rules - one path should match the prometheusSpec.routePrefix
@@ -127,4 +127,4 @@ prometheus:
     tls:
       - secretName: prometheus-tls
         hosts:
-          - prometheus.orarm.cagou.ovh
+          - prometheus.cagou.ovh

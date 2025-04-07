@@ -25,7 +25,7 @@ expose:
       secretName: harbor-tls
   ingress:
     hosts:
-      core: harbor.orarm.cagou.ovh
+      core: harbor.cagou.ovh
     # set to the type of ingress controller if it has specific requirements.
     # leave as `default` for most ingress controllers.
     # set to `gce` if using the GCE ingress controller
@@ -62,7 +62,7 @@ expose:
 # the IP address of k8s node
 #
 # If Harbor is deployed behind the proxy, set it as the URL of proxy
-externalURL: http://harbor.orarm.cagou.ovh
+externalURL: http://harbor.cagou.ovh
 
 
 existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD

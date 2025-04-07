@@ -5,14 +5,14 @@ ingress:
     traefik.ingress.kubernetes.io/router.middlewares: "security-oauth2-proxy@kubernetescrd"
     cert-manager.io/cluster-issuer: "letsencrypt"
   hosts:
-   - host: code.orarm.cagou.ovh
+   - host: code.cagou.ovh
      paths:
        - /
   ingressClassName: traefik
   tls:
    - secretName: code-server-tls
      hosts:
-       - code.orarm.cagou.ovh
+       - code.cagou.ovh
 
 existingSecret: ""
 

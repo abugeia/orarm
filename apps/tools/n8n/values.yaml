@@ -42,11 +42,11 @@ ingress:
   # define a custom ingress class Name, like "traefik" or "nginx"
   className: "traefik"
   hosts:
-    - host: n8n.orarm.cagou.ovh
+    - host: n8n.cagou.ovh
       paths: ['/']
   tls:
     - hosts:
-        - n8n.orarm.cagou.ovh
+        - n8n.cagou.ovh
       secretName: n8n-tls
 
 # the main (n8n) application related configuration + Kubernetes specific settings
@@ -60,11 +60,11 @@ main:
   #      postgresdb:
   #        host: 192.168.0.52
     N8N_HOST:
-      "n8n.orarm.cagou.ovh"
+      "n8n.cagou.ovh"
     N8N_PROTOCOL:
       "https"
     WEBHOOK_URL:
-      "https://n8n.orarm.cagou.ovh/"
+      "https://n8n.cagou.ovh/"
 
       
 

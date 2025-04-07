@@ -10,13 +10,13 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`argocd.orarm.cagou.ovh`)
+      match: Host(`argocd.cagou.ovh`)
       priority: 10
       services:
         - name: argocd-server
           port: 80
     - kind: Rule
-      match: Host(`argocd.orarm.cagou.ovh`) && Headers(`Content-Type`, `application/grpc`)
+      match: Host(`argocd.cagou.ovh`) && Headers(`Content-Type`, `application/grpc`)
       priority: 11
       services:
         - name: argocd-server
@@ -24,7 +24,7 @@ spec:
           scheme: h2c
   tls:
     # - hosts:
-    #   - argocd.orarm.cagou.ovh
+    #   - argocd.cagou.ovh
     #   secretName: argocd-secret
     certResolver: default
     # certResolver: letsencrypt

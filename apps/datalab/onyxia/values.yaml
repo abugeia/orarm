@@ -5,8 +5,8 @@ ingress:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: "letsencrypt"
   hosts:
-    - host: datalab.orarm.cagou.ovh
+    - host: datalab.cagou.ovh
   tls:
      - secretName: onyxia-tls
        hosts:
-         - datalab.orarm.cagou.ovh
+         - datalab.cagou.ovh

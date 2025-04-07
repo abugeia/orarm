@@ -16,12 +16,12 @@ server:
       cert-manager.io/cluster-issuer: letsencrypt
     ingressClassName: "traefik"
     hosts:
-      - host: vault.orarm.cagou.ovh
+      - host: vault.cagou.ovh
         paths: ["/"]
     tls:
      - secretName: vault-tls
        hosts:
-         - vault.orarm.cagou.ovh
+         - vault.cagou.ovh
 
   # This configures the Vault Statefulset to create a PVC for data
   # storage when using the file or raft backend storage engines.
