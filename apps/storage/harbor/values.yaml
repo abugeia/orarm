@@ -62,7 +62,7 @@ expose:
 # the IP address of k8s node
 #
 # If Harbor is deployed behind the proxy, set it as the URL of proxy
-externalURL: http://harbor.cagou.ovh
+externalURL: https://harbor.cagou.ovh
 
 
 existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
