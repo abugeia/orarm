@@ -11,8 +11,10 @@ kubetail:
           hosts:
             - kubetail.orarm.cagou.ovh
       # not in initial values.yaml      
-      hosts:
-      - host: kubetail.orarm.cagou.ovh
-        paths:
-          - /
- 
+      rules:
+        - host: kubetail.orarm.cagou.ovh
+          http:
+            paths:
+            - path: /
+              pathType: Prefix
+      className: traefik
