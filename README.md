@@ -2,22 +2,16 @@
 
 ## todo
 - clickhouse ? ou equivalent
-- oauth2-proxy + gh ou un autre avec IdP
+- ameliorer oauth2-proxy (IdP ?)
 - monitoring ressources
-- container registry => harbor nécessite amd64, ne fonctionne par avec arm
 - builder
 - noeud local + gpu
 - knative
-- code : img perso avec kubectl + python, activer DinD, faire un sercet kubeconfig et le monter dans l'img
+- code : img perso avec kubectl + python, activer DinD, faire un secret kubeconfig et le monter dans l'img
 - doc rm d'une app
 - kestra
 - remplacer le domaine par une var dans les manifest
-
-## notdo
-- postgresql ? a priori il vaut mieux partir vers une instance par app lorsque nécessaire
-- vault ? très (trop?) chronophage pour le déploiement
-- kubevirt + distri => essayé mais pas d'interet pour le moment
-- Secret avec clé api pour llm à monter dans n8n => géré par les credentials
+- manifest traefik au lieu de cloud init
 
 
 # install 
@@ -45,9 +39,9 @@ example de conf :
 ```
 cat <<EOF >> ~/.ssh/config
 
-Host orarm
-    HostName orarm.cagou.ovh
-    User ubuntu
+Host conn_name
+    HostName host
+    User user
     IdentityFile ~/.ssh/id_ed25519
     LocalForward 6443 127.0.0.1:6443
     Port 22
