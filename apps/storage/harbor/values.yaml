@@ -119,7 +119,7 @@ database:
   external:
     host: postgresql-service.storage.svc.cluster.local
     port: 5432
-    existingSecret: pg-harbor-secret
+    existingSecret: harbor-pg-secret
     existingSecretKey: pg-user-password
     existingSecretAdminPasswordKey: pg-admin-password
     database: harbor_db
