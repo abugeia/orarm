@@ -115,17 +115,25 @@ trivy:
     kubernetes.io/arch: amd64
 
 database:
-  internal:
-    resources:
-      limits:
-        memory: 300Mi
-    nodeSelector:
-      kubernetes.io/arch: amd64
-    initContainer:
-      resources:
-        limits:
-          memory: 128Mi
-
+  type: external
+  external:
+    host: postgresql-service.storage.svc.cluster.local
+    port: 5432
+    existingSecret: pg-harbor-secret
+    existingSecretKey: pg-user-password
+    existingSecretAdminPasswordKey: pg-admin-password
+    database: harbor_db
+    username: harbor_user
+  # internal:
+  #   resources:
+  #     limits:
+  #       memory: 300Mi
+  #   nodeSelector:
+  #     kubernetes.io/arch: amd64
+  #   initContainer:
+  #     resources:
+  #       limits:
+  #         memory: 128Mi
 
 redis:
   internal:

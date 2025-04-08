@@ -39,3 +39,4 @@ terraform.rc
 secrets/vault
 secrets/sealed-secrets.pem
 secrets/clear
+apps/storage/pg-harbor/migration
