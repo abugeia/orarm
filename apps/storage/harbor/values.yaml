@@ -120,8 +120,8 @@ database:
     host: pg-harbor-postgresql.storage.svc.cluster.local
     port: 5432
     existingSecret: harbor-pg-secret
-    existingSecretKey: pg-user-password
-    existingSecretAdminPasswordKey: pg-admin-password
+    # existingSecretKey: pg-user-password
+    # existingSecretAdminPasswordKey: pg-admin-password
     database: harbor_db
     username: harbor_user
   # internal:
