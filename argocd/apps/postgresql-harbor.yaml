@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pg-harbor
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+  - repoURL: registry-1.docker.io/bitnamicharts/postgresql
+    targetRevision: 16.6.2
+    chart: postgresql
+    helm:
+      valueFiles:
+      - $values/apps/storage/pg-harbor/values.yaml
+  - repoURL: 'https://github.com/abugeia/orarm.git'
+    targetRevision: HEAD
+    ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: storage
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
