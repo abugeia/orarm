@@ -3,6 +3,7 @@
   "extends": [
     "config:recommended"
   ],
+  "schedule": ["* 8-12 * * 1,4"],
   "argocd": {
     "fileMatch": [
       "argocd/apps/.+\\.yaml$"
