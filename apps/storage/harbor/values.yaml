@@ -1,3 +1,7 @@
+ipFamily:
+  ipv6:
+    enabled: false
+
 expose:
   tls:
     # Enable TLS or not.
@@ -105,14 +109,15 @@ registry:
 
 
 trivy:
-  resources:
-    requests:
-      memory: 128Mi
-    limits:
-      cpu: 1
-      memory: 250Mi
-  nodeSelector:
-    kubernetes.io/arch: amd64
+  enabled: false
+  # resources:
+  #   requests:
+  #     memory: 128Mi
+  #   limits:
+  #     cpu: 1
+  #     memory: 250Mi
+  # nodeSelector:
+  #   kubernetes.io/arch: amd64
 
 database:
   type: external
