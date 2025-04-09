@@ -1,18 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: botten-anna
+  name: boten-anna
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: 'https://github.com/abugeia/orarm.git'
-    path: 'apps/botten-anna' 
+    path: 'apps/boten-anna' 
     targetRevision: HEAD
 
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: botten-anna
+    namespace: boten-anna
 
   syncPolicy:
     automated:

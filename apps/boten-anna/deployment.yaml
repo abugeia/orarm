@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: botten-anna-deployment
-  namespace: botten-anna
+  name: boten-anna-deployment
+  namespace: boten-anna
   labels:
-    app: botten-anna 
+    app: boten-anna 
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: botten-anna # Doit correspondre aux labels du template de pod
+      app: boten-anna # Doit correspondre aux labels du template de pod
   template:
     metadata:
       labels:
-        app: botten-anna 
+        app: boten-anna 
     spec:
       imagePullSecrets: 
         - name: harbor-creds
       containers:
-        - name: botten-anna 
-          image: harbor.cagou.ovh/botten-anna/helloworld-python:main 
+        - name: boten-anna 
+          image: harbor.cagou.ovh/boten-anna/helloworld-python:main 
           ports:
             - containerPort: 5000 
           readinessProbe:
