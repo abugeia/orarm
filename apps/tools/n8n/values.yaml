@@ -36,7 +36,7 @@ ingress:
   enabled: true
   annotations: 
     kubernetes.io/tls-acme: "true"
-    # traefik.ingress.kubernetes.io/router.middlewares: "security-oauth2-proxy@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.middlewares: "security-oauth2-proxy@kubernetescrd"
     cert-manager.io/cluster-issuer: "letsencrypt"
   
   # define a custom ingress class Name, like "traefik" or "nginx"

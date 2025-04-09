@@ -1,0 +1,85 @@
+global:
+  # -- The URL where Airbyte will be reached; This should match your Ingress host
+  airbyteUrl: "airbyte.cagou.ovh"
+
+  jobs:
+    kube:
+      nodeSelector:
+        kubernetes.io/arch: arm64
+
+webapp:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+  ingress:
+    # -- Set to true to enable ingress record generation
+    enabled: true
+    # -- Specifies ingressClassName for clusters >= 1.18+
+    className: "traefik"
+    # -- Ingress annotations done as key:value pairs
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt"
+      traefik.ingress.kubernetes.io/router.middlewares: "security-oauth2-proxy@kubernetescrd"
+    # kubernetes.io/tls-acme: "true"
+    # -- The list of hostnames to be covered with this ingress record.
+    hosts: 
+    - host: airbyte.cagou.ovh
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+    # -- Custom ingress TLS configuration
+    tls: 
+    - secretName: airbyte-tls
+      hosts:
+      - airbyte.cagou.ovh
+      
+server:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+worker:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+worker-launcher:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+airbyte-bootloader:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+temporal:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+postgresql:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+mionio:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+cron:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+connector-builder-server:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+keycloak:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+keycloak-setup:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+workload-api-server:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+featureflag-server:
+  nodeSelector:
+    kubernetes.io/arch: arm64
