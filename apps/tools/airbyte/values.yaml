@@ -31,7 +31,7 @@ webapp:
     - secretName: airbyte-tls
       hosts:
       - airbyte.cagou.ovh
-      
+
 server:
   nodeSelector:
     kubernetes.io/arch: arm64
@@ -73,6 +73,10 @@ keycloak:
     kubernetes.io/arch: arm64
 
 keycloak-setup:
+  nodeSelector:
+    kubernetes.io/arch: arm64
+
+workload-launcher:
   nodeSelector:
     kubernetes.io/arch: arm64
 
