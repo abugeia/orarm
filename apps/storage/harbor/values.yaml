@@ -2,6 +2,10 @@ ipFamily:
   ipv6:
     enabled: false
 
+updateStrategy:
+  # test to avoid too much ram usage
+  type: Recreate
+
 expose:
   tls:
     # Enable TLS or not.
@@ -81,6 +85,8 @@ portal:
     kubernetes.io/arch: amd64
 
 core:
+  startupProbe:
+    initialDelaySeconds: 15
   resources:
     limits:
         memory: 200Mi
