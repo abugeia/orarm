@@ -1,22 +1,85 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: harbor
+#   namespace: argocd
+#   finalizers:
+#     - resources-finalizer.argocd.argoproj.io
+# spec:
+#   project: default
+#   sources:
+#   - repoURL: https://helm.goharbor.io
+#     targetRevision: 1.16.2
+#     chart: harbor
+#     helm:
+#       valueFiles:
+#       - $values/apps/storage/harbor/values.yaml
+#   - repoURL: 'https://github.com/abugeia/orarm.git'
+#     targetRevision: HEAD
+#     ref: values
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: storage
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+# ---
+# # gemini
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: harbor
+#   namespace: argocd
+#   finalizers:
+#     - resources-finalizer.argocd.argoproj.io
+# spec:
+#   project: default
+
+#   # Utiliser UNE source pointant vers votre overlay Kustomize
+#   source:
+#     repoURL: 'https://github.com/abugeia/orarm.git' # Votre dépôt Git
+#     targetRevision: HEAD                           # Ou la branche où se trouve votre code (ex: main)
+#     path: apps/storage/harbor/kustomize-overlay    # Chemin vers le dossier contenant kustomization.yaml
+
+#     # --- Section Helm ---
+#     # Indique à Argo CD d'utiliser ce chart Helm COMME BASE pour Kustomize
+#     helm:
+#       # Source du Chart Helm
+#       repoURL: https://helm.goharbor.io
+#       chart: harbor
+#       targetRevision: 1.16.2  # <--- RENOVATE METTRA À JOUR CETTE LIGNE !
+
+#       # Fichiers de valeurs Helm
+#       valueFiles:
+#         # Chemin relatif DEPUIS le 'path' Kustomize (kustomize-overlay) vers votre values.yaml
+#         - ../values.yaml
+
+#       # Nom de la release Helm (important pour le nommage des ressources)
+#       # Utilisez le même nom que votre application Argo CD ou un nom cohérent
+#       releaseName: harbor
+
+#   # --- Destination et SyncPolicy (inchangés) ---
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: storage
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+---
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: harbor
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  sources:
-  - repoURL: https://helm.goharbor.io
-    targetRevision: 1.16.2
-    chart: harbor
-    helm:
-      valueFiles:
-      - $values/apps/storage/harbor/values.yaml
-  - repoURL: 'https://github.com/abugeia/orarm.git'
+  source:
+    repoURL: 'https://github.com/abugeia/orarm.git'
     targetRevision: HEAD
-    ref: values
+    path: apps/harbor/overlay-oramd
   destination:
     server: https://kubernetes.default.svc
     namespace: storage
