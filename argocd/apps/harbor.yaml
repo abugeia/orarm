@@ -79,7 +79,7 @@ spec:
   source:
     repoURL: 'https://github.com/abugeia/orarm.git'
     targetRevision: HEAD
-    path: apps/harbor/overlay-oramd
+    path: apps/storage/harbor/overlay-oramd
   destination:
     server: https://kubernetes.default.svc
     namespace: storage
