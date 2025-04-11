@@ -19,7 +19,7 @@ spec:
         - name: harbor-creds
       containers:
         - name: boten-anna 
-          image: harbor.cagou.ovh/boten-anna/helloworld-python:main 
+          image: harbor.cagou.ovh/botten-anna/helloworld-python:main 
           ports:
             - containerPort: 5000 
           readinessProbe:
