@@ -14,13 +14,12 @@ server:
     domain: argocd.cagou.ovh
   certificateSecret:
     enabled: true
-configs:
-  params:
-    server.insecure: true
 
 global:
   domain: argocd.cagou.ovh
 
 configs:
+  params:
+    server.insecure: true
   cm:
     kustomize.buildOptions: "--enable-helm"
