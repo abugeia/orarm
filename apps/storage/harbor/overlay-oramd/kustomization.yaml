@@ -2,4 +2,4 @@ resources:
   - ../base
 
 patches:
-  - path: patch-values.yaml
+  - path: patch-core-recreate.yaml
