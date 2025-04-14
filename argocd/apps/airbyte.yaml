@@ -9,7 +9,7 @@ spec:
   project: default
   sources:
   - repoURL: https://airbytehq.github.io/helm-charts/
-    targetRevision: 1.6.0-alpha-b62b3bec781
+    targetRevision: 1.6.0
     chart: airbyte
     helm:
       valueFiles:
