@@ -4,11 +4,6 @@
     "config:recommended"
   ],
   "schedule": ["* 0-3 * * 1,4"],
-  "notifications": {
-    "email": {
-      "enabled": false
-    }
-  },
   "prHourlyLimit": 2,
   "prConcurrentLimit": 5,
   "argocd": {
