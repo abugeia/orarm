@@ -3,7 +3,14 @@
   "extends": [
     "config:recommended"
   ],
-  "schedule": ["* 8-12 * * 1,4"],
+  "schedule": ["* 0-3 * * 1,4"],
+  "notifications": {
+    "email": {
+      "enabled": false
+    }
+  },
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
   "argocd": {
     "fileMatch": [
       "argocd/apps/.+\\.yaml$"
@@ -18,7 +25,15 @@
         "pin",
         "digest"
       ],
-      "automerge": true
+      "automerge": true,
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
+    },
+    {
+      "matchFileNames": ["**/kustomization.yaml"],
+      "matchDepTypes": ["helmChart"],
+      "groupName": "helm charts",
+      "groupSlug": "helm-charts"
     }
   ]
 }
