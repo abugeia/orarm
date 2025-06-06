@@ -83,6 +83,11 @@ portal:
       memory: 50Mi
   nodeSelector:
     kubernetes.io/arch: amd64
+  tolerations:
+    - key: "low-ram-node"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
 
 core:
   startupProbe:
@@ -92,6 +97,11 @@ core:
         memory: 200Mi
   nodeSelector:
     kubernetes.io/arch: amd64
+  tolerations:
+    - key: "low-ram-node"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
 
 jobservice:
   resources:
@@ -99,6 +109,11 @@ jobservice:
         memory: 80Mi
   nodeSelector:
     kubernetes.io/arch: amd64
+  tolerations:
+    - key: "low-ram-node"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
 
 
 registry:
@@ -112,6 +127,11 @@ registry:
         memory: 150Mi
   nodeSelector:
     kubernetes.io/arch: amd64
+  tolerations:
+    - key: "low-ram-node"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
 
 
 trivy:

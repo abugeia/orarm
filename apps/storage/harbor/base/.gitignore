@@ -1,0 +1,2 @@
+# Ignore the vendored charts directory, as it's only for local inspection.
+charts/
