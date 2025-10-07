@@ -23,18 +23,32 @@ helm install argocd argo/argo-cd -f argocd/helm/values.yaml -n argocd --create-n
 kubectl apply -f argocd/apps/root-app.yaml -n argocd
 ```
 
-### Récupération du mot de passe admin par defaut pour argo cd
+## ⚠️ Post-installation
+
+### IP NFS après recréation du cluster
+```bash
+# 1. Récupérer la nouvelle IP du control plane
+kubectl get nodes -o wide
+
+# 2. Mettre à jour conf/storageclass.yaml
+# server: 10.0.1.XXX  # <- Nouvelle IP
+
+# 3. Appliquer
+kubectl apply -f conf/storageclass.yaml
+```
+
+### 📝 Récupération du mot de passe admin par défaut pour ArgoCD
 ```
 kubectl -n argocd get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
 ```
 
-### remote conf
+### 🔗 Configuration remote
 
 ```
 scp user@host:~/.kube/config ~/.kube/config
 
 ```
-example de conf :
+**Exemple de configuration SSH :**
 ```
 cat <<EOF >> ~/.ssh/config
 

@@ -173,6 +173,11 @@ redis:
         memory: 80Mi
     nodeSelector: 
       kubernetes.io/arch: amd64
+    tolerations:
+      - key: "low-ram-node"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
 
 exporter:
   resources:
