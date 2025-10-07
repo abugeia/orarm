@@ -21,7 +21,12 @@ kubectl create secret generic testsecret \
 ```
 Création d'un sealedsecret à partir de secret.yaml :
 ```
-kubeseal --controller-name=sealed-secrets --controller-namespace=security --format=yaml < secrets/clear/secret.yaml >> secrets/sealedsecret.yaml
+kubeseal \
+--controller-name=sealed-secrets \
+--controller-namespace=security \
+--format=yaml \
+--cert=secrets/clear/sealed-secrets.pem \ 
+< secrets/clear/secret.yaml >> secrets/sealedsecret.yaml
 
 ```
 flag pour le cert
@@ -29,6 +34,7 @@ flag pour le cert
 
 
 ## Vault
+/!\ non utilisé sur le cluster /!\
 ```
 kubectl exec -it vault-0 -n security -- vault operator init
 ```

@@ -11,7 +11,6 @@
 - doc rm d'une app
 - kestra
 - remplacer le domaine par une var dans les manifest
-- manifest traefik au lieu de cloud init
 
 
 # install 
