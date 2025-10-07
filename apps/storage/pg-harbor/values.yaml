@@ -1,6 +1,8 @@
-# Force une image simple qui existe réellement
+# Utilise le repo legacy Bitnami qui fonctionne encore
 image:
-  tag: "17"
+  registry: docker.io
+  repository: bitnamilegacy/postgresql
+  tag: "17.4.0-debian-12-r14"
 
 primary: # Configuration pour le pod primaire/unique
   affinity:
