@@ -1,3 +1,7 @@
+# Force une image simple qui existe réellement
+image:
+  tag: "17"
+
 primary: # Configuration pour le pod primaire/unique
   affinity:
     nodeAffinity:
