@@ -4,6 +4,17 @@ image:
   repository: bitnamilegacy/postgresql
   tag: "17.4.0-debian-12-r14"
 
+# Désactiver la vérification d'images pour utiliser bitnamilegacy
+global:
+  security:
+    allowInsecureImages: true
+
+# Utiliser l'image Bitnami Legacy qui fonctionne
+image:
+  registry: docker.io
+  repository: bitnamilegacy/postgresql
+  tag: "17.4.0-debian-12-r14"
+
 primary: # Configuration pour le pod primaire/unique
   affinity:
     nodeAffinity:
