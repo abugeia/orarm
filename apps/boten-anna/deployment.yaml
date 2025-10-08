@@ -16,7 +16,7 @@ spec:
         app: boten-anna 
     spec:
       imagePullSecrets: 
-        - name: harbor-creds
+        - name: harbor-cd-registry-secret
       containers:
         - name: boten-anna 
           image: harbor.cagou.ovh/botten-anna/helloworld-python:main 

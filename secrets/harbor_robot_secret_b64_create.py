@@ -74,7 +74,7 @@ def generate_dockerconfig_base64(robot_file_path, registry_url):
 
 if __name__ == "__main__":
 
-    robot_file = "secrets/clear/robot$cluster-sa.json"
+    robot_file = "secrets/clear/robot$cluster-cd.json"
     harbor_registry = "harbor.cagou.ovh" 
 
     print(f"Lecture du fichier : {robot_file}")
