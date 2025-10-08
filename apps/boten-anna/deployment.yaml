@@ -19,7 +19,7 @@ spec:
         - name: harbor-cd-registry-secret
       containers:
         - name: boten-anna 
-          image: harbor.cagou.ovh/botten-anna/helloworld-python:main 
+          image: harbor.cagou.ovh/prod/boten-anna:main 
           ports:
             - containerPort: 5000 
           readinessProbe:
