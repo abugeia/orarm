@@ -1,0 +1,163 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calimmo
+  namespace: calimmo
+  labels:
+    app: calimmo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calimmo
+  template:
+    metadata:
+      labels:
+        app: calimmo
+    spec:
+      containers:
+      - name: scraper
+        image: your-registry.domain.com/calimmo/scraper:latest
+        command: ["uv", "run", "python", "-m", "services.scraper.api"]
+        ports:
+        - containerPort: 8001
+          name: http
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: DATABASE_URL
+        envFrom:
+        - configMapRef:
+            name: calimmo-config
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        volumeMounts:
+        - name: logs
+          mountPath: /app/logs
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 5
+          periodSeconds: 10
+      volumes:
+      - name: logs
+        emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scraper
+  namespace: calimmo
+  labels:
+    app: calimmo
+spec:
+  selector:
+    app: calimmo
+  ports:
+  - name: http
+    port: 8001
+    targetPort: 8001
+    protocol: TCP
+  type: ClusterIP
+
+---
+# CronJob pour déclencher le scraping automatique
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: calimmo-trigger
+  namespace: calimmo
+spec:
+  schedule: "0 */6 * * *"  # Toutes les 6 heures
+  concurrencyPolicy: Forbid  # Empêche les exécutions simultanées
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: scraper-trigger
+            image: curlimages/curl:latest
+            command: 
+            - /bin/sh
+            - -c
+            - |
+              echo "Triggering scraping at $(date)"
+              curl -X POST http://scraper.calimmo.svc.cluster.local:8001/api/scrape \
+                -H "Content-Type: application/json" \
+                -d '{"max_pages": null, "force_full": false}' \
+                --max-time 30 \
+                --retry 3 \
+                --retry-delay 5
+              echo "Scraping trigger sent"
+            resources:
+              requests:
+                memory: "64Mi"
+                cpu: "50m"
+              limits:
+                memory: "128Mi"
+                cpu: "100m"
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+
+---
+# Job manuel pour initialisation de la base
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: immo-db-init
+  namespace: calimmo
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: db-init
+        image: your-registry.domain.com/calimmo/scraper:latest
+        command: ["uv", "run", "python", "-m", "src.database"]
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: DATABASE_URL
+        envFrom:
+        - configMapRef:
+            name: calimmo-config
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"

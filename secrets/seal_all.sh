@@ -11,9 +11,14 @@ SEALED_DIR="./sealed"
 
 mkdir -p "$SEALED_DIR"
 
+
 for file in "$CLEAR_DIR"/*.yaml; do
   name=$(basename "$file")
   out="$SEALED_DIR/${name}"
+  if [ -f "$out" ]; then
+    echo "[SKIP] $out existe déjà, on saute."
+    continue
+  fi
   echo "Chiffre $file -> $out"
   kubeseal \
     --controller-name="$CONTROLLER_NAME" \

@@ -32,3 +32,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: boten-anna
+  ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: calimmo
