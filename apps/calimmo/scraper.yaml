@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: calimmo
+  name: calimmo-scraper
   namespace: calimmo
   labels:
-    app: calimmo
+    app: calimmo-scraper
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: calimmo
+      app: calimmo-scraper
   template:
     metadata:
       labels:
-        app: calimmo
+        app: calimmo-scraper
     spec:
       containers:
       - name: scraper
@@ -64,18 +64,20 @@ spec:
       volumes:
       - name: logs
         emptyDir: {}
+      nodeSelector:
+        kubernetes.io/arch: arm64
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: scraper
+  name: calimmo-scraper
   namespace: calimmo
   labels:
-    app: calimmo
+    app: calimmo-scraper
 spec:
   selector:
-    app: calimmo
+    app: calimmo-scraper
   ports:
   - name: http
     port: 8001
@@ -149,7 +151,7 @@ spec:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: postgres-secrets
+              name: pg-calimmo-secrets
               key: DATABASE_URL
         envFrom:
         - configMapRef:

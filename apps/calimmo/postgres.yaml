@@ -1,5 +1,4 @@
 ---
-# ConfigMap pour la configuration PostgreSQL
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -8,23 +7,9 @@ metadata:
 data:
   POSTGRES_DB: "immodb"
   POSTGRES_USER: "immo_user"
-  # Note: Le mot de passe sera dans un Secret
 
 ---
-# Secret pour les données sensibles PostgreSQL
-apiVersion: v1
-kind: Secret
-metadata:
-  name: postgres-secrets
-  namespace: calimmo
-type: Opaque
-stringData:
-  POSTGRES_PASSWORD: "your-secure-password"
-  # URL complète pour les autres services
-  DATABASE_URL: "postgresql://immo_user:your-secure-password@postgres:5432/immodb"
 
----
-# PersistentVolume pour stocker les données PostgreSQL
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -35,11 +20,10 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi  # Ajustez selon vos besoins
-  storageClassName: ""  # Utilisez la classe de stockage par défaut
+      storage: 1Gi 
+  storageClassName: "nfs-csi"  # Utilise NFS avec expansion de volume
 
 ---
-# Deployment PostgreSQL
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -79,21 +63,21 @@ spec:
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: postgres-secrets
+              name: pg-calimmo-secrets
               key: POSTGRES_PASSWORD
         - name: PGDATA
-          value: /var/lib/postgresql/data/pgdata
+          value: /var/lib/postgresql/18/docker
         volumeMounts:
         - name: postgres-storage
-          mountPath: /var/lib/postgresql/data
+          mountPath: /var/lib/postgresql
           subPath: postgres  # Évite les problèmes de permissions
         resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
+          # requests:
+          #   memory: "256Mi"
+          #   cpu: "250m"
           limits:
-            memory: "1Gi"
-            cpu: "1000m"
+            memory: "512Mi"
+            cpu: "500m"
         livenessProbe:
           exec:
             command:
@@ -126,7 +110,6 @@ spec:
           claimName: postgres-pvc
 
 ---
-# Service pour exposer PostgreSQL en interne
 apiVersion: v1
 kind: Service
 metadata:
@@ -142,4 +125,4 @@ spec:
     port: 5432
     targetPort: 5432
     protocol: TCP
-  type: ClusterIP  # Accessible seulement depuis le cluster
+  type: ClusterIP
