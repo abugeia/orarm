@@ -21,7 +21,6 @@ spec:
       containers:
       - name: scraper
         image: harbor.cagou.ovh/prod/calimmo-scraper:main
-        command: ["uv", "run", "python", "-m", "services.scraper.api"]
         ports:
         - containerPort: 8001
           name: http
