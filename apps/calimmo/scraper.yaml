@@ -16,9 +16,11 @@ spec:
       labels:
         app: calimmo-scraper
     spec:
+      imagePullSecrets: 
+        - name: harbor-cd-registry-secret
       containers:
       - name: scraper
-        image: your-registry.domain.com/calimmo/scraper:latest
+        image: harbor.cagou.ovh/prod/calimmo-scraper:main
         command: ["uv", "run", "python", "-m", "services.scraper.api"]
         ports:
         - containerPort: 8001
@@ -143,9 +145,11 @@ spec:
   template:
     spec:
       restartPolicy: Never
+      imagePullSecrets: 
+        - name: harbor-cd-registry-secret
       containers:
       - name: db-init
-        image: your-registry.domain.com/calimmo/scraper:latest
+        image: harbor.cagou.ovh/prod/calimmo-scraper:main
         command: ["uv", "run", "python", "-m", "src.database"]
         env:
         - name: DATABASE_URL
