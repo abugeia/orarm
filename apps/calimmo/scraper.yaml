@@ -29,7 +29,7 @@ spec:
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
-              name: postgres-secrets
+              name: pg-calimmo-secrets
               key: DATABASE_URL
         envFrom:
         - configMapRef:
