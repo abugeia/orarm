@@ -30,7 +30,7 @@ spec:
         - name: harbor-cd-registry-secret
       containers:
       - name: calimmo-dashboard
-        image: harbor.cagou.ovh/prod/calimmo-dashboard:main
+        image: harbor.cagou.ovh/prod/calimmo-dashboard:latest
         ports:
         - containerPort: 8000
         env:
