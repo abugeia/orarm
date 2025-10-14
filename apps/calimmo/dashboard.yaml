@@ -6,9 +6,9 @@ metadata:
   namespace: calimmo
 data:
   LOG_LEVEL: "INFO"
-  SCRAPER_URL: "http://scraper.calimmo.svc.cluster.local:8001"
+  SCRAPER_URL: "http://calimmo-scraper.calimmo.svc.cluster.local:8001"
 
----
+--- 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
