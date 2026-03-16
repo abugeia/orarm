@@ -1,0 +1,7 @@
+operator:
+  hostname: orarm-operator
+  state:
+    pvc:
+      enabled: true
+      storageClass: nfs-csi # Confirmé via conf/storageclass.yaml
+      size: 100Mi
