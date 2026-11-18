@@ -1,0 +1,131 @@
+# Gatus : sondes de disponibilité du homelab, alertes vers ntfy.
+# Configuration dans config.yaml (ConfigMap généré par kustomization.yaml),
+# jeton ntfy dans le SealedSecret gatus-secrets (secrets/sealed/).
+# UI : https://status.cagou.ovh, derrière oauth2-proxy.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gatus-data
+  namespace: observability
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gatus
+  namespace: observability
+  labels:
+    app: gatus
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: gatus
+  template:
+    metadata:
+      labels:
+        app: gatus
+    spec:
+      # Les workers oramd-* sont hors service : on reste sur le control-plane,
+      # où vit aussi le volume local-path.
+      nodeSelector:
+        kubernetes.io/hostname: orarm
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        runAsNonRoot: true
+      containers:
+        - name: gatus
+          image: twinproduction/gatus:v5.38.0
+          env:
+            - name: GATUS_CONFIG_PATH
+              value: /config/config.yaml
+          envFrom:
+            - secretRef:
+                name: gatus-secrets
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: config
+              mountPath: /config
+              readOnly: true
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: config
+          configMap:
+            name: gatus-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: gatus-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gatus
+  namespace: observability
+spec:
+  selector:
+    app: gatus
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gatus
+  namespace: observability
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    traefik.ingress.kubernetes.io/router.middlewares: security-oauth2-proxy@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - status.cagou.ovh
+      secretName: gatus-tls
+  rules:
+    - host: status.cagou.ovh
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gatus
+                port:
+                  number: 80

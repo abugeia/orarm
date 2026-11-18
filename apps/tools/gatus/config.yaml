@@ -1,0 +1,117 @@
+# Gatus : sonde les applis du homelab depuis orarm (hors de la maison) et
+# alerte sur ntfy. Complète l'alerting Grafana de home_kluster, qui ne peut
+# rien signaler si toute la maison tombe (pve1, box, courant).
+#
+# Ce qui n'est PAS sondé, volontairement :
+# - les applis derrière Sablier sans tinyauth (pgadmin, open-webui, superset,
+#   jellyfin, filebrowser public) : une sonde les réveillerait en permanence ;
+# - les applis derrière tinyauth seul : la sonde ne verrait que le 401 de
+#   tinyauth (un seul témoin, Homepage, suffit à tester Traefik + tinyauth) ;
+# - harbor.cagou.ovh et calimmo : en panne depuis la perte des workers oramd-*.
+
+alerting:
+  ntfy:
+    url: https://ntfy.cagou.ovh
+    topic: homelab-alerts
+    token: ${NTFY_TOKEN}   # Secret gatus-secrets (bws : ORARM_GATUS_SECRETS)
+    priority: 4
+    click: https://status.cagou.ovh
+    default-alert:
+      failure-threshold: 3   # 3 échecs d'affilée, soit ~3 min
+      success-threshold: 2
+      send-on-resolved: true
+
+storage:
+  type: sqlite
+  path: /data/data.db
+
+ui:
+  title: Statut du homelab
+  header: Homelab
+
+# pve1 (donc tout home_kluster) est éteint la nuit : extinction entre 23h40 et
+# 00h50, rallumage vers 07h55 en semaine et 09h05 le week-end, puis ~15 min
+# pour que tout remonte. Marge prise des deux côtés.
+.maison-nuit: &maison-nuit
+  # nuits du dimanche au jeudi → réveil en semaine
+  - start: "23:30"
+    duration: 9h       # → 08h30
+    timezone: Pacific/Noumea
+    every: [Sunday, Monday, Tuesday, Wednesday, Thursday]
+  # nuits du vendredi et du samedi → réveil le week-end
+  - start: "23:30"
+    duration: 10h10m   # → 09h40
+    timezone: Pacific/Noumea
+    every: [Friday, Saturday]
+
+.maison: &maison
+  group: maison
+  interval: 1m
+  maintenance-windows: *maison-nuit
+  alerts:
+    - type: ntfy
+
+.orarm: &orarm
+  group: orarm
+  interval: 1m
+  alerts:
+    - type: ntfy
+
+endpoints:
+  # --- maison (home_kluster, via Cloudflare) ---------------------------------
+  - name: PocketID (SSO)
+    <<: *maison
+    url: https://auth-id.valab.top/healthz
+    conditions:
+      - "[STATUS] == 204"
+  - name: TinyAuth
+    <<: *maison
+    url: https://auth.valab.top/
+    conditions:
+      - "[STATUS] == 200"
+  - name: Homepage (Traefik + tinyauth)
+    <<: *maison
+    url: https://home.valab.top/
+    conditions:
+      - "[STATUS] == 401"
+  - name: Argo CD
+    <<: *maison
+    url: https://argocd.valab.top/healthz
+    conditions:
+      - "[STATUS] == 200"
+  - name: Grafana
+    <<: *maison
+    url: https://grafana.valab.top/api/health
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].database == ok"
+  - name: Immich
+    <<: *maison
+    url: https://immich.valab.top/api/server/ping
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].res == pong"
+  - name: Home Assistant
+    <<: *maison
+    url: https://ha.valab.top/manifest.json
+    conditions:
+      - "[STATUS] == 200"
+  - name: Harbor
+    <<: *maison
+    url: https://harbor.valab.top/api/v2.0/ping
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY] == Pong"
+
+  # --- orarm (sondé depuis lui-même : ne détecte pas sa propre chute) -------
+  - name: ntfy
+    <<: *orarm
+    url: https://ntfy.cagou.ovh/v1/health
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].healthy == true"
+  - name: Argo CD (orarm)
+    <<: *orarm
+    url: https://argocd.cagou.ovh/healthz
+    conditions:
+      - "[STATUS] == 200"
