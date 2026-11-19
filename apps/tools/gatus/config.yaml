@@ -7,7 +7,8 @@
 #   jellyfin, filebrowser public) : une sonde les réveillerait en permanence ;
 # - les applis derrière tinyauth seul : la sonde ne verrait que le 401 de
 #   tinyauth (un seul témoin, Homepage, suffit à tester Traefik + tinyauth) ;
-# - harbor.cagou.ovh et calimmo : en panne depuis la perte des workers oramd-*.
+# - harbor.cagou.ovh et calimmo : désactivés (argocd/apps/*.yaml.off). Harbor
+#   n'a pas d'image ARM et les workers amd64 n'ont pas assez de RAM.
 
 alerting:
   ntfy:
