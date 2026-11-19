@@ -30,18 +30,27 @@ ui:
   title: Statut du homelab
   header: Homelab
 
-# pve1 (donc tout home_kluster) est éteint la nuit : extinction entre 23h40 et
-# 00h50, rallumage vers 07h55 en semaine et 09h05 le week-end, puis ~15 min
-# pour que tout remonte. Marge prise des deux côtés.
+# pve1 (donc tout home_kluster) est éteint la nuit par le pi0 (Wake-on-LAN /
+# extinction SSH). Source de vérité : /opt/raspberry_pi_apps/state.json sur le
+# pi0, modifiable depuis son UI. Allumé : lun-jeu 07h50-23h30, ven 08h30-24h,
+# sam 09h-24h, dim 09h-23h30 (+ 00h-00h30 le sam et le dim). Les services
+# répondent ~5 min après le réveil ; on garde 45 min de marge.
+# → Si le planning du pi0 change, ajuster ces fenêtres.
+# `every` désigne le jour où la fenêtre COMMENCE.
 .maison-nuit: &maison-nuit
-  # nuits du dimanche au jeudi → réveil en semaine
+  # nuits du dimanche au mercredi → réveil lun-jeu à 07h50
   - start: "23:30"
     duration: 9h       # → 08h30
     timezone: Pacific/Noumea
-    every: [Sunday, Monday, Tuesday, Wednesday, Thursday]
-  # nuits du vendredi et du samedi → réveil le week-end
+    every: [Sunday, Monday, Tuesday, Wednesday]
+  # nuit du jeudi → réveil le vendredi à 08h30
   - start: "23:30"
-    duration: 10h10m   # → 09h40
+    duration: 9h45m    # → 09h15
+    timezone: Pacific/Noumea
+    every: [Thursday]
+  # nuits du vendredi et du samedi → réveil à 09h00
+  - start: "23:30"
+    duration: 10h15m   # → 09h45
     timezone: Pacific/Noumea
     every: [Friday, Saturday]
 
